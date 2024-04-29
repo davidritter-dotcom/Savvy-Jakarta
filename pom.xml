@@ -16,7 +16,7 @@
     <java.version>17</java.version>
   </properties>
 
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
   <dependencies>
     <dependency>
       <groupId>jakarta.platform</groupId>

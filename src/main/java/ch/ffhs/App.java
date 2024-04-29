@@ -1,4 +1,4 @@
-package com.savvy.app;
+package ch.ffhs;
 
 /**
  * Hello world!
