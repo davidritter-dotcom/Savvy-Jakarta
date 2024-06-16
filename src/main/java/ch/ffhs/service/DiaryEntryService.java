@@ -4,31 +4,47 @@ import ch.ffhs.model.DiaryEntry;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
-
-import java.lang.invoke.MethodHandles;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 @Transactional
 public class DiaryEntryService {
-    private static final Logger logger = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-    @PersistenceContext(unitName = "diaryentry")
-    private EntityManager entityManager;
+    @PersistenceContext(unitName = "diary")
+    private EntityManager em;
 
-    public Response createDiaryEntry(DiaryEntry diaryEntry) {
-        entityManager.persist(diaryEntry);
+    public Response create(DiaryEntry diaryEntry) {
+        em.persist(diaryEntry);
         return Response.status(Response.Status.CREATED).entity(diaryEntry).build();
     }
 
+    public Response update(DiaryEntry diaryEntry) {
+        em.merge(diaryEntry);
+        return Response.status(Response.Status.OK).entity(diaryEntry).build();
+    }
+
     public Response getAll() {
-        return Response.ok().entity(entityManager.createQuery("SELECT d FROM DiaryEntry d", DiaryEntry.class).getResultList()).build();
+        return Response.ok().entity(em.createQuery("SELECT d FROM DiaryEntry d", DiaryEntry.class).getResultList()).build();
+    }
+
+
+    public Response findByUserId(Long user_id) {
+        TypedQuery<DiaryEntry> query = em.createQuery("SELECT e FROM DiaryEntry e WHERE e.user_id = :user_id", DiaryEntry.class);
+        query.setParameter("user_id", user_id);
+        return Response.ok().entity(query.getResultList()).build();
     }
 
     public Response getById(Long id) {
-        return Response.ok().entity(entityManager.find(DiaryEntry.class, id)).build();
+        return Response.ok().entity(em.find(DiaryEntry.class, id)).build();
+    }
+
+    public void delete(Long id) {
+        DiaryEntry entry = em.find(DiaryEntry.class, id);
+        if (entry != null) {
+            em.remove(entry);
+        }
     }
 }
 

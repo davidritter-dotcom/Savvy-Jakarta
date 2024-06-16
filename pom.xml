@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ch.ffhs</groupId>
-  <artifactId>savvy-jakarta</artifactId>
+  <artifactId>diary</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>savvy-jakarta</name>
+  <name>diary</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,7 +61,7 @@
   </dependencies>
 
   <build>
-    <finalName>savvy-jakarta</finalName>
+    <finalName>dairy</finalName>
   </build>
 
 </project>
