@@ -61,7 +61,7 @@
   </dependencies>
 
   <build>
-    <finalName>dairy</finalName>
+    <finalName>diary</finalName>
   </build>
 
 </project>

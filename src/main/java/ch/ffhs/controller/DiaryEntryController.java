@@ -20,14 +20,17 @@ public class DiaryEntryController {
 
     @PUT
     @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEntryById(@PathParam("id") Long id, DiaryEntry diaryEntry) {
+    public Response getEntryById(@PathParam("id") Long id, DiaryEntry updatedEntry ) {
         logger.info("updateing entry with id: " + id);
-        Response existing = diaryEntryService.getById(id);
-        if (existing.getStatusInfo() == Response.Status.NOT_FOUND) {
+        DiaryEntry existing = diaryEntryService.getByIdPlain(id);
+        if (existing == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return diaryEntryService.update(diaryEntry);
+        existing.setTitle(updatedEntry.getTitle());
+        existing.setContent(updatedEntry.getContent());
+        return diaryEntryService.update(existing);
     }
 
     @GET
@@ -38,18 +41,18 @@ public class DiaryEntryController {
     }
 
     @GET
-    @Path("")
+    @Path("/{user_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByUserId() {
-        return diaryEntryService.findByUserId(1L);
+    public Response findByUserId(@PathParam("user_id") Long user_id) {
+        return diaryEntryService.findByUserId(user_id);
     }
 
 
     @POST
     @Path("create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createEntry(DiaryEntry entry) {
-        if ((!Objects.equals(entry.getTitle(), "NullTest")))
-            entry.setUser_id(1L);
         return diaryEntryService.create(entry);
     }
 

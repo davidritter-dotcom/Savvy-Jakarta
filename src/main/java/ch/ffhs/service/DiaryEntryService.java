@@ -40,6 +40,10 @@ public class DiaryEntryService {
         return Response.ok().entity(em.find(DiaryEntry.class, id)).build();
     }
 
+    public DiaryEntry getByIdPlain(Long id) {
+        return em.find(DiaryEntry.class, id);
+    }
+
     public void delete(Long id) {
         DiaryEntry entry = em.find(DiaryEntry.class, id);
         if (entry != null) {
