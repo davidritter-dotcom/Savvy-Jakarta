@@ -30,7 +30,7 @@ public class DiaryEntryService {
     }
 
 
-    public Response findByUserId(Long user_id) {
+    public Response findByUserId(String user_id) {
         TypedQuery<DiaryEntry> query = em.createQuery("SELECT e FROM DiaryEntry e WHERE e.user_id = :user_id", DiaryEntry.class);
         query.setParameter("user_id", user_id);
         return Response.ok().entity(query.getResultList()).build();

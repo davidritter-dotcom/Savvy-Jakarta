@@ -20,5 +20,5 @@ public class DiaryEntry {
     private String content;
 
     @Column(nullable = false)
-    private Long user_id;
+    private String user_id;
 }

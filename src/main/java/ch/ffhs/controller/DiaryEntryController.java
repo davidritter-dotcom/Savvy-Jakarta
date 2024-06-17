@@ -43,7 +43,7 @@ public class DiaryEntryController {
     @GET
     @Path("/{user_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByUserId(@PathParam("user_id") Long user_id) {
+    public Response findByUserId(@PathParam("user_id") String user_id) {
         return diaryEntryService.findByUserId(user_id);
     }
 
