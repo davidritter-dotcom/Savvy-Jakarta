@@ -51,6 +51,10 @@ public class DiaryEntryController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") Long id) {
+        DiaryEntry entry = diaryEntryService.getByIdPlain(id);
+        if (entry == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return diaryEntryService.getById(id);
     }
 
@@ -66,6 +70,10 @@ public class DiaryEntryController {
     @DELETE
     @Path("/{id}")
     public Response deleteEntry(@PathParam("id") Long id) {
+        DiaryEntry entry = diaryEntryService.getByIdPlain(id);
+        if (entry == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         diaryEntryService.delete(id);
         return Response.noContent().build();
     }
